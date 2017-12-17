@@ -29,5 +29,6 @@ EOF = 5;
 		else
 			return (-1);
 	}
+//result = 1;
 	return (result);
 }
