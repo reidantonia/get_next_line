@@ -14,17 +14,20 @@
 
 int get_next_line(const int fd, char **line)
 {
-     char buffer[BUFFER_SIZE];
-    if (fd == 1)
-    {
-        while (**line != '\n' || **line != EOF)
-            line++;
-        if (**line == '\0')
-            return (1);
-        if (**line != EOF)
-            return (0);
-        else
-            return (-1);
-    }
-    return (result);
+	int result;
+int EOF;
+	char buffer[BUFFER_SIZE];
+EOF = 5;
+	if (fd == 1)
+	{
+		while (**line != '\n' || **line != EOF)
+			line++;
+		if (**line == '\0')
+			return (1);
+		if (**line != EOF)
+			return (0);
+		else
+			return (-1);
+	}
+	return (result);
 }
