@@ -28,7 +28,6 @@ int get_next_line(const int fd, char **line)
 	}
 	printf("\n");
 	printf("Ret is %lu\nCount is %d\n",ret, count);
-	
 	if (ret == 1)
 		return (1);
 	//	if (ret == EOF)
