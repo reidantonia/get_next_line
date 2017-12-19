@@ -16,13 +16,16 @@ int main(int argc, char **argv)
 	argc = 0;
 
 
-	fd = open(argv[1], O_RDONLY);
-	if (!fd || fd == -1)
+	if (!(fd = open(argv[1], O_RDONLY)))
 		return (0);
 
-	get_next_line(fd, &line);
-	//printf("%s\n", line);
-	//	while ((i = get_next_line(fd, &line)) > 0)
-	//printf("%s\n", line);
+	while ((i = get_next_line(fd, &line)) > 0)
+	{
+		printf("%s\n", line);
+	}
+	if (close(fd) == -1)
+	{
+		return (0);
+	}
 	return (0);
 }

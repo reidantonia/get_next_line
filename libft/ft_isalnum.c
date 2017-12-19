@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_isalnum.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: areid <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mjoubert <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/28 09:37:13 by areid             #+#    #+#             */
-/*   Updated: 2017/11/28 09:37:15 by areid            ###   ########.fr       */
+/*   Created: 2017/11/14 15:30:51 by mjoubert          #+#    #+#             */
+/*   Updated: 2017/11/17 09:44:44 by mjoubert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# define BUFF_SIZE 32
+#include <ctype.h>
+#include "libft.h"
 
-# include "libft/libft.h"
-# include <stdlib.h>
-# include <unistd.h>
-
-int get_next_line(const int fd, char **line);
-
-#endif // GET_NEXT_LINE_H
+int	ft_isalnum(int c)
+{
+	if ((c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') ||
+			(c >= '0' && c <= '9'))
+		return (1);
+	return (0);
+}

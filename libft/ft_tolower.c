@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   ft_tolower.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: areid <marvin@42.fr>                       +#+  +:+       +#+        */
+/*   By: mjoubert <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/28 09:37:13 by areid             #+#    #+#             */
-/*   Updated: 2017/11/28 09:37:15 by areid            ###   ########.fr       */
+/*   Created: 2017/11/14 16:09:54 by mjoubert          #+#    #+#             */
+/*   Updated: 2017/11/17 09:45:42 by mjoubert         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# ifndef GET_NEXT_LINE_H
-# define GET_NEXT_LINE_H
-# define BUFF_SIZE 32
+#include "libft.h"
 
-# include "libft/libft.h"
-# include <stdlib.h>
-# include <unistd.h>
-
-int get_next_line(const int fd, char **line);
-
-#endif // GET_NEXT_LINE_H
+int	ft_tolower(int c)
+{
+	if (c >= 'A' && c <= 'Z')
+		return (c + 32);
+	return (c);
+}

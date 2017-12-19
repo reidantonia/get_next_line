@@ -13,7 +13,6 @@
 #include "get_next_line.h"
 #include <stdio.h>
 
-
 int get_next_line(const int fd, char **line)
 {
 	char buf[BUFF_SIZE + 1];
@@ -22,34 +21,18 @@ int get_next_line(const int fd, char **line)
 	ssize_t ret;
 	count = 0;
 
-//	while ((ret = read(fd, &buf, BUFF_SIZE)) && buf)
-//{}
-//printf("%s\n\n", buf);
 	while ((ret = read(fd, &c, 1)) && (c != 10))
 	{
 		printf("%c", c);
 		count++;
 	}
 	printf("\n");
-
-
-	return (0);
-}
-/*	int result;
-	int EOF;
-	char buffer[BUFFER_SIZE];
-	EOF = 5;
-	if (fd == 1)
-	{
-	while (**line != '\n' || **line != EOF)
-	line++;
-	if (**line == '\0')
-	reiturn (1);
-	if (**line != EOF)
-	return (0);
+	printf("Ret is %lu\nCount is %d\n",ret, count);
+	
+	if (ret == 1)
+		return (1);
+	//	if (ret == EOF)
+	//	return (0);
 	else
-	return (-1);
-	}
-//result = 1;
-return (result);
-}*/
+		return (-1);
+}
