@@ -21,11 +21,15 @@ int get_next_line(const int fd, char **line)
 	ssize_t ret;
 	count = 0;
 
-	while ((ret = read(fd, &c, 1)) && (c != 10))
+	while ((ret = read(fd, buf, BUFF_SIZE)) > 0)
+{
+printf("%s", buf);
+}
+	/*while ((ret = read(fd, &c, 1)) && (c != 10))
 	{
 		printf("%c", c);
 		count++;
-	}
+	}*/
 	printf("\n");
 	printf("Ret is %lu\nCount is %d\n",ret, count);
 	if (ret == 1)
