@@ -21,7 +21,7 @@ int main(int argc, char **argv)
 
 	while ((i = get_next_line(fd, &line)) > 0)
 	{
-		printf("%s\n", line);
+		//printf("%s\n", line);
 	}
 	if (close(fd) == -1)
 	{

@@ -18,20 +18,26 @@ int get_next_line(const int fd, char **line)
 	char buf[BUFF_SIZE + 1];
 	int count;
 	char c;
+	int i;
 	ssize_t ret;
 	count = 0;
-
+	i = 0;
 	while ((ret = read(fd, buf, BUFF_SIZE)) > 0)
-{
-printf("%s", buf);
-}
-	/*while ((ret = read(fd, &c, 1)) && (c != 10))
 	{
-		printf("%c", c);
-		count++;
-	}*/
-	printf("\n");
-	printf("Ret is %lu\nCount is %d\n",ret, count);
+		if (ret == -1)
+			return (-1);
+		buf[BUFF_SIZE] = '\0';
+		printf("Ret is '%lu'\nfd is '%d'\n",ret,fd);
+		printf("%d is <<%s>>\n\n", i, buf);
+		i++;
+	}
+
+	printf("\n\nTHe result is:\n<<%s>>", buf);
+	/* {
+	   printf("%c", c);
+	   count++;
+	   }*/
+	*line = ft_strdup(buf);
 	if (ret == 1)
 		return (1);
 	//	if (ret == EOF)
