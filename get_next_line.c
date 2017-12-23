@@ -27,7 +27,7 @@ static int		check_line(char *str)
 		return (0);
 }
 
-static char		*trim_line(char *str)
+static char		*ft_trim_line(char *str)
 {
 		char	*ret;
 		int		i;
@@ -46,35 +46,43 @@ static char		*trim_line(char *str)
 		return (ret);
 }
 
+static char		*ft_prep_next(char *str)
+{
+	int		i;
+	char	*ret;
+	i = 0;
+
+	while (str[i] != '\n')
+		i++;
+	ret = ft_strsub(str, i + 1, ft_strlen(str) - 1); 
+	return (ret);
+}
+
 int			get_next_line(const int fd, char **line)
 {
 		char buf[BUFF_SIZE + 1];
 		char *str;
+		char *tmp;
 		char c;
 		ssize_t ret;
 		
+		str = ft_memalloc(1);
 		while ((ret = read(fd, buf, BUFF_SIZE)) > 0)
 		{
 				if (ret == -1)
 						return (-1);
 				buf[BUFF_SIZE] = '\0';
-				if (check_line(buf))
+				str = ft_strjoin(str, buf);
+				if (check_line(str))
 				{
-						*line = trim_line(buf);
-						return (0);
+						*line = ft_trim_line(buf);
+						printf("BUF IS\n\n<<%s>>\n\n",buf);
+						*buf = *buf - 3;
+						//tmp = ft_prep_next(buf);
+						//ft_strclr(buf);
+						//buf = ft_strdup(tmp);
+						return(1);
 				}
-				else
-				{
-						str = ft_strjoin(str, buf);
-				}
-				if (check_line(buf))
-				{
-						*line = trim_line(buf);
-						return (0);
-				}
-				while (buf)
-						buf[i++] = '\0';
-				i++;
 		}
 		if (ret == 1)
 				return (1);
