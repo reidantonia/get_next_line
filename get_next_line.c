@@ -46,7 +46,7 @@ static char		*ft_trim_line(char *str)
 		return (ret);
 }
 
-static char		*ft_prep_next(char *str)
+static char		*ft_get_remainder(char *str)
 {
 		int		i;
 		char	*ret;
@@ -55,7 +55,6 @@ static char		*ft_prep_next(char *str)
 		while (str[i] != '\n')
 				i++;
 		ret = ft_strsub(str, i + 1, ft_strlen(str) - 1); 
-		//printf("ret IS\n\n<<%s>>\n\n", ret);
 		return (ret);
 }
 
@@ -66,11 +65,10 @@ int			get_next_line(const int fd, char **line)
 		char *tmp;
 		ssize_t ret;
 		int index;
-		
+
 		index = 0;
-		printf("\n---->BUF BEFORE <<%s>>\n\n", str);
-		str = ft_memalloc(1);
-		//ptr = buf;
+		if (!str)
+				str = ft_memalloc(1);
 		while ((ret = read(fd, buf, BUFF_SIZE)) > 0)
 		{
 				if (ret == -1)
@@ -79,14 +77,13 @@ int			get_next_line(const int fd, char **line)
 				str = ft_strjoin(str, buf);
 				if ((index = check_line(str)) != BUFF_SIZE)
 				{
-						*line = ft_trim_line(buf);
+						*line = ft_trim_line(str);
 						tmp = ft_strdup(str);
 						ft_strclr(str);
 						str = ft_strnew(BUFF_SIZE - index);
-						str = ft_prep_next(tmp);
+						str = ft_get_remainder(tmp);
 						return(1);
 				}
-				//ft_strclr(buf);
 		}
 		if (ret == 1)
 				return (1);
