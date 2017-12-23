@@ -76,10 +76,10 @@ int			get_next_line(const int fd, char **line)
 				if (check_line(str))
 				{
 						*line = ft_trim_line(buf);
-						printf("BUF IS\n\n<<%s>>\n\n",buf);
-						*buf = *buf - 3;
-						//tmp = ft_prep_next(buf);
-						//ft_strclr(buf);
+						//printf("BUF IS\n\n<<%s>>\n\n",buf);
+						//*buf = *buf - 3;
+						//timp = ft_prep_next(buf);
+						ft_strclr(buf);
 						//buf = ft_strdup(tmp);
 						return(1);
 				}
