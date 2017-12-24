@@ -66,6 +66,8 @@ int			get_next_line(const int fd, char **line)
 		ssize_t ret;
 		int index;
 
+		if (BUFF_SIZE < 1 || !line || (fd < 0))
+				return (-1);
 		index = 0;
 		if (!str)
 				str = ft_memalloc(1);
@@ -85,11 +87,5 @@ int			get_next_line(const int fd, char **line)
 						return(1);
 				}
 		}
-		if (ret == 1)
-				return (1);
-		//	if (ret == EOF)
-		//	return (0);
-		else
-
-				return (-1);
+		return (0);
 }
