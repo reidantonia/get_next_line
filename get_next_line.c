@@ -13,18 +13,45 @@
 #include "get_next_line.h"
 #include <stdio.h>
 
-static int		check_line(char *str)
+int unescape(char *str)
+{
+		static const char escape[256] = {
+				['a'] = '\a',        ['b'] = '\b',        ['f'] = '\f',
+				['n'] = '\n',        ['r'] = '\r',        ['t'] = '\t',
+				['v'] = '\v',        ['\\'] = '\\',       ['\''] = '\'',
+				['"'] = '\"',        ['?'] = '\?',
+		};
+
+		char *p = str;      /* Pointer to original string */
+		char *q = str;      /* Pointer to new string; q <= p */
+
+		while (*p) {
+				int c = *(unsigned char*) p++;
+
+				if (c == '\\') {
+						c = *(unsigned char*) p++;
+						if (c == '\0') break;
+						if (escape[c]) c = escape[c];
+				}
+
+				*q++ = c;    
+		}
+		*q = '\0';
+		return (q - str);
+}
+
+static int		ft_check_line(const char *str)
 {
 		int i;
 
 		i = 0;
-		while (str)
+		while (str && str[i] != '\0')
 		{
 				if (str[i] == '\n')
 						return (i);
 				i++;
 		}
-		return (0);
+		return (-1);
 }
 
 static char		*ft_trim_line(char *str)
@@ -76,8 +103,10 @@ int			get_next_line(const int fd, char **line)
 				if (ret == -1)
 						return (-1);
 				buf[BUFF_SIZE] = '\0';
+
+				unescape(buf);
 				str = ft_strjoin(str, buf);
-				if ((index = check_line(str)) != BUFF_SIZE)
+				if ((index = ft_check_line((const char*)str)) != BUFF_SIZE)
 				{
 						*line = ft_trim_line(str);
 						tmp = ft_strdup(str);
