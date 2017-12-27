@@ -59,11 +59,11 @@ static char		*ft_trim_line(char *str)
 		int		i;
 
 		i = 0;
-		while (str[i] != '\n')
+		while (!(str[i] == '\n' || str[i] == '\0'))
 				i++;
 		ret = ft_strnew(i - 1);
 		i = 0;
-		while (str[i] != '\n')
+		while (!(str[i] == '\n' || str[i] == '\0'))
 		{
 				ret[i] = str[i];
 				i++;
