@@ -9,9 +9,7 @@
 /*   Updated: 2017/11/28 09:37:07 by areid            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 #include "get_next_line.h"
-#include <stdio.h>
 
 int unescape(char *str)
 {
@@ -33,7 +31,7 @@ int unescape(char *str)
 						if (c == '\0') break;
 						if (escape[c]) c = escape[c];
 				}
-				*q++ = c;    
+				*q++ = c;
 		}
 		*q = '\0';
 		return (q - str);
@@ -59,11 +57,11 @@ static char		*ft_trim_line(char *str)
 		int		i;
 
 		i = 0;
-		while (str[i] != '\n')
+		while (str[i] != '\n' && str[i] != '\0')
 				i++;
-		ret = ft_strnew(i - 1);
+		ret = ft_strnew(i);
 		i = 0;
-		while (str[i] != '\n')
+		while (str[i] != '\n' && str[i] != '\0')
 		{
 				ret[i] = str[i];
 				i++;
@@ -75,78 +73,37 @@ static char		*ft_get_remainder(char *str)
 {
 		int		i;
 		char	*ret;
-		i = 0;
 
+		i = 0;
 		if (str[i] == '\0')
-				return (str);
+				return (NULL);
 		while (str[i] != '\n')
 				i++;
 		ret = ft_strsub(str, i + 1, ft_strlen(str) - i);
 		return (ret);
 }
 
-static unsigned int	ft_strclen(char *save)
+int					get_next_line(int const fd, char **line)
 {
-		unsigned int	i;
-
-		i = 0;
-		while (save[i] != '\n' && save[i] != '\0')
-				i++;
-		return (i);
-}
-
-
-static char			*ft_chrandcpy(char *save)
-{
-		if (ft_strchr(save, '\n'))
-		{
-				ft_strcpy(save, ft_strchr(save, '\n') + 1);
-				return (save);
-		}
-		if (ft_strclen(save) > 0)
-		{
-				ft_strcpy(save, ft_strchr(save, '\0'));
-				return (save);
-		}
-		return (NULL);
-}
-static char			*ft_strrejoin(char *s1, char *s2, size_t len)
-{
-		char		*str;
-		int			nb;
-		char		*tmp;
-
-		nb = ft_strlen(s1) + ++len;
-		str = ft_strnew(nb);
-		tmp = str;
-		while (*s1)
-				*str++ = *s1++;
-		while (*s2 && --len > 0)
-				*str++ = *s2++;
-		*str = '\0';
-		return (str - (str - tmp));
-}
-
-int			get_next_line(const int fd, char **line)
-{
-		char buf[BUFF_SIZE + 1];
-		static char *str[1];
-		char *tmp;
-		char *ptr;
-		ssize_t ret;
+		char		buf[BUFF_SIZE + 1];
+		static char	*str;
+		int			ret;
+		char		*ptr;
 
 		if (BUFF_SIZE < 1 || !line || (fd < 0))
 				return (-1);
-		while (!(ft_strchr(str[1], '\n')) && (ret = read(fd, buf, BUFF_SIZE)) > 0)
-	{
+		if (!str)
+				str = ft_strnew(0);
+		while (!(ft_check_line((const char*)str)) && (ret = read(fd, buf, BUFF_SIZE)) > 0)
+		{
 				buf[ret] = '\0';
 				unescape(buf);
-				ptr = str[1];
-				str[1] = ft_strrejoin(ptr, buf, ret);
+				ptr = str;
+				str = ft_strjoin(str, buf);
 				free(ptr);
 		}
-			*line = ft_strsub(str[1], 0, ft_strclen(str[1]));
-		if (ft_chrandcpy(str[1]) == NULL)
+		*line = ft_trim_line(str);
+		if ((str = ft_get_remainder(str)) == NULL)
 				return (0);
 		return (1);
 }
