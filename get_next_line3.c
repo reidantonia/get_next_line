@@ -85,68 +85,34 @@ static char		*ft_get_remainder(char *str)
 		return (ret);
 }
 
-static unsigned int	ft_strclen(char *save)
-{
-		unsigned int	i;
-
-		i = 0;
-		while (save[i] != '\n' && save[i] != '\0')
-				i++;
-		return (i);
-}
-
-
-static char			*ft_chrandcpy(char *save)
-{
-		if (ft_strchr(save, '\n'))
-		{
-				ft_strcpy(save, ft_strchr(save, '\n') + 1);
-				return (save);
-		}
-		if (ft_strclen(save) > 0)
-		{
-				ft_strcpy(save, ft_strchr(save, '\0'));
-				return (save);
-		}
-		return (NULL);
-}
-static char			*ft_strrejoin(char *s1, char *s2, size_t len)
-{
-		char		*str;
-		int			nb;
-		char		*tmp;
-
-		nb = ft_strlen(s1) + ++len;
-		str = ft_strnew(nb);
-		tmp = str;
-		while (*s1)
-				*str++ = *s1++;
-		while (*s2 && --len > 0)
-				*str++ = *s2++;
-		*str = '\0';
-		return (str - (str - tmp));
-}
-
 int			get_next_line(const int fd, char **line)
 {
 		char buf[BUFF_SIZE + 1];
-		static char *str[1];
+		static char *str;
 		char *tmp;
 		char *ptr;
 		ssize_t ret;
 
 		if (BUFF_SIZE < 1 || !line || (fd < 0))
 				return (-1);
-		while (!(ft_strchr(str[1], '\n')) && (ret = read(fd, buf, BUFF_SIZE)) > 0)
-	{
+		while ((ret = read(fd, buf, BUFF_SIZE)) > 0 || str[0] != '\0')
+		{
+				if (ret == -1)
+						return (-1);
 				buf[ret] = '\0';
 				unescape(buf);
-				ptr = str[1];
-				str[1] = ft_strrejoin(ptr, buf, ret);
-				free(ptr);
+				if (!str)
+						str = ft_strdup(buf);
+				else
+						str = ft_strjoin(str, buf);
+				if (ft_check_line((const char*)str) && str[0] != '\0')
+				{
+						tmp = ft_strdup(str);
+						*line = ft_trim_line(str);
+						free(str);
+						str = ft_get_remainder(tmp);
+						return(1);
+				}
 		}
-			*line = ft_strsub(str[1], 0, ft_strclen(str[1]));
-		if (ft_chrandcpy(str[1]) == NULL)
-				return (0);
-		return (1);
+		return (0);
 }
