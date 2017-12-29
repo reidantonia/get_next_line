@@ -81,7 +81,7 @@ static char		*ft_get_remainder(char *str)
 				return (str);
 		while (str[i] != '\n')
 				i++;
-		ret = ft_strsub(str, i + 1, ft_strlen(str) - 1); 
+		ret = ft_strsub(str, i + 1, ft_strlen(str) - i); 
 		return (ret);
 }
 
@@ -90,13 +90,13 @@ int			get_next_line(const int fd, char **line)
 		char buf[BUFF_SIZE + 1];
 		static char *str;
 		char *tmp;
+		char *ptr;
 		ssize_t ret;
 
 		if (BUFF_SIZE < 1 || !line || (fd < 0))
 				return (-1);
-		while ((ret = read(fd, buf, BUFF_SIZE)) > 0)
+		while ((ret = read(fd, buf, BUFF_SIZE)) > 0 /*|| str[0] == '\0'*/)
 		{
-		printf("ret is %lu\n*str is \n\n", ret);fflush(stdout);
 				if (ret == -1)
 						return (-1);
 				buf[BUFF_SIZE] = '\0';
@@ -114,6 +114,5 @@ int			get_next_line(const int fd, char **line)
 						return(1);
 				}
 		}
-		*line = str;
 		return (0);
 }
