@@ -59,11 +59,11 @@ static char		*ft_trim_line(char *str)
 		int		i;
 
 		i = 0;
-		while (!(str[i] == '\n' || str[i] == '\0'))
+		while (str[i] != '\n')
 				i++;
 		ret = ft_strnew(i - 1);
 		i = 0;
-		while (!(str[i] == '\n' || str[i] == '\0'))
+		while (str[i] != '\n')
 		{
 				ret[i] = str[i];
 				i++;
@@ -94,8 +94,9 @@ int			get_next_line(const int fd, char **line)
 
 		if (BUFF_SIZE < 1 || !line || (fd < 0))
 				return (-1);
-		while ((ret = read(fd, buf, BUFF_SIZE)) > 0 || *str != '\0')
+		while ((ret = read(fd, buf, BUFF_SIZE)) > 0)
 		{
+		printf("ret is %lu\n*str is \n\n", ret);fflush(stdout);
 				if (ret == -1)
 						return (-1);
 				buf[BUFF_SIZE] = '\0';
@@ -104,7 +105,7 @@ int			get_next_line(const int fd, char **line)
 						str = ft_strdup(buf);
 				else
 						str = ft_strjoin(str, buf);
-				if (ft_check_line((const char*)str) || (!ft_check_line((const char*)str) && ret == 0))
+				if (ft_check_line((const char*)str))
 				{
 						*line = ft_trim_line(str);
 						tmp = ft_strdup(str);
@@ -113,5 +114,6 @@ int			get_next_line(const int fd, char **line)
 						return(1);
 				}
 		}
+		*line = str;
 		return (0);
 }
