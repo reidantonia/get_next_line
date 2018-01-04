@@ -12,7 +12,7 @@
 
 #include "get_next_line.h"
 
-int unescape(char *str)
+/*int unescape(char *str)
 {
 		const char escape[256] = {
 				['a'] = '\a',        ['b'] = '\b',        ['f'] = '\f',
@@ -21,8 +21,8 @@ int unescape(char *str)
 				['"'] = '\"',        ['?'] = '\?',
 		};
 
-		char *p = str;      /* Pointer to original string */
-		char *q = str;      /* Pointer to new string; q <= p */
+		char *p = str;      // Pointer to original string 
+		char *q = str;      // Pointer to new string; q <= p 
 
 		while (*p) {
 				int c = *(unsigned char*) p++;
@@ -36,9 +36,9 @@ int unescape(char *str)
 		}
 		*q = '\0';
 		return (q - str);
-}
+}*/
 
-char	*ft_strcomb(const char *s1, const char *s2)
+char	*ft_strcomb(char *s1, char *s2)
 {
 		char	*fresh;
 		size_t	i;
@@ -52,10 +52,9 @@ char	*ft_strcomb(const char *s1, const char *s2)
 		while (s1[i])
 				fresh[j++] = s1[i++];
 		i = 0;
+			//	free(s1);
 		while (s2[i])
 				fresh[j++] = s2[i++];
-//		free(s1);
-//		free(s2);
 		return (fresh);
 }
 
@@ -89,7 +88,7 @@ static char		*ft_trim_line(char *str)
 				ret[i] = str[i];
 				i++;
 		}
-		//free(str);
+//		free(str);
 		return (ret);
 }
 
@@ -104,6 +103,7 @@ static char		*ft_get_remainder(char *str)
 		while (str[i] != '\n' && str[i] != '\0')
 				i++;
 		ret = ft_strsub(str, i + 1, ft_strlen(str) - i);
+		free(str);
 		return (ret);
 }
 
@@ -129,11 +129,12 @@ int					get_next_line(int const fd, char **line)
 				buf[ret] = '\0';
 				//unescape(buf);
 				ptr = str;
-				str = ft_strcomb((const char*)str, (const char*)buf);
+				str = ft_strcomb(ptr, buf);
 				free(ptr);
 		}
 		*line = ft_trim_line(str);
-		if ((str = ft_get_remainder(str)) == NULL)
+		ptr = str;
+		if ((str = ft_get_remainder(ptr)) == NULL)
 				return (0);
 		return (1);
 }

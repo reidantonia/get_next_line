@@ -11,30 +11,42 @@
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
+
+static	char	*ft_remp(char *str, int i, char const *s2)
+{
+	int	b;
+
+	b = 0;
+	while (s2[b] != '\0')
+	{
+		str[i] = s2[b];
+		b++;
+		i++;
+	}
+	str[i] = '\0';
+	return (str);
+}
 
 char			*ft_strjoin(char const *s1, char const *s2)
 {
-		char	*str;
-		int		l1;
-		int		l2;
-		int		x;
-		int		y;
+	char	*str;
+	int		i;
+	int		len;
 
-		x = 0;
-		y = 0;
-		l1 = ft_strlen((char*)s1);
-		l2 = ft_strlen((char*)s2);
-		str = (char*)malloc(sizeof(char) * (l1 + l2 + 1));
-		if (str == NULL || (*s1 && *s2) == '\0')
-				return (NULL);
-		while (x < l1)
+	i = 0;
+	if (!s1 || !s2)
+		return (0);
+	len = (ft_strlen(s1) + ft_strlen(s2));
+	str = ft_strnew(len + 1);
+	if (str)
+	{
+		while (s1[i] != '\0')
 		{
-				str[x] = s1[x];
-				x++;
+			str[i] = s1[i];
+			i++;
 		}
-		while (y < l2)
-				str[x++] = s2[y++];
-		str[x] = '\0';
+		str = ft_remp(str, i, s2);
 		return (str);
+	}
+	return (0);
 }
