@@ -38,7 +38,7 @@ int unescape(char *str)
 		return (q - str);
 }
 
-char	*ft_strcomb(char *s1, char *s2)
+char	*ft_strcomb(const char *s1, const char *s2)
 {
 		char	*fresh;
 		size_t	i;
@@ -89,6 +89,7 @@ static char		*ft_trim_line(char *str)
 				ret[i] = str[i];
 				i++;
 		}
+		//free(str);
 		return (ret);
 }
 
@@ -128,7 +129,7 @@ int					get_next_line(int const fd, char **line)
 				buf[ret] = '\0';
 				//unescape(buf);
 				ptr = str;
-				str = ft_strcomb(str, buf);
+				str = ft_strcomb((const char*)str, (const char*)buf);
 				free(ptr);
 		}
 		*line = ft_trim_line(str);
