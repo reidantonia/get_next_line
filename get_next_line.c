@@ -115,7 +115,7 @@ int					get_next_line(int const fd, char **line)
 		if ((str = ft_get_remainder(ptr)) == NULL)
 		{
 		free(ptr);
-		free(otp);
+		//free(otp);
 				return (0);
 		}
 		return (1);
