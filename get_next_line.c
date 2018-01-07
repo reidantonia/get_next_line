@@ -11,32 +11,7 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-/*int unescape(char *str)
-{
-		const char escape[256] = {
-				['a'] = '\a',        ['b'] = '\b',        ['f'] = '\f',
-				['n'] = '\n',        ['r'] = '\r',        ['t'] = '\t',
-				['v'] = '\v',        ['\\'] = '\\',       ['\''] = '\'',
-				['"'] = '\"',        ['?'] = '\?',
-		};
-
-		char *p = str;      // Pointer to original string 
-		char *q = str;      // Pointer to new string; q <= p 
-
-		while (*p) {
-				int c = *(unsigned char*) p++;
-
-				if (c == '\\') {
-						c = *(unsigned char*) p++;
-						if (c == '\0') break;
-						if (escape[c]) c = escape[c];
-				}
-				*q++ = c;
-		}
-		*q = '\0';
-		return (q - str);
-}*/
+#include <stdio.h>
 
 char	*ft_strcomb(char *s1, char *s2)
 {
@@ -52,7 +27,7 @@ char	*ft_strcomb(char *s1, char *s2)
 		while (s1[i])
 				fresh[j++] = s1[i++];
 		i = 0;
-			//	free(s1);
+		//	free(s1);
 		while (s2[i])
 				fresh[j++] = s2[i++];
 		return (fresh);
@@ -88,7 +63,6 @@ static char		*ft_trim_line(char *str)
 				ret[i] = str[i];
 				i++;
 		}
-//		free(str);
 		return (ret);
 }
 
@@ -113,6 +87,7 @@ int					get_next_line(int const fd, char **line)
 		static char	*str;
 		int			ret;
 		char		*ptr;
+		char *otp;
 
 		if (read(fd, buf, 0) < 0)
 				return (-1);
@@ -127,14 +102,21 @@ int					get_next_line(int const fd, char **line)
 		while (!(ft_check_line((const char*)str)) && (ret = read(fd, buf, BUFF_SIZE)) > 0)
 		{
 				buf[ret] = '\0';
-				//unescape(buf);
 				ptr = str;
 				str = ft_strcomb(ptr, buf);
 				free(ptr);
 		}
-		*line = ft_trim_line(str);
+		otp = ft_trim_line(str);
+		*line = otp;
+		//*line = (otp = ft_trim_line(str)); 
+		//free(otp);
+	//	printf("ptr is %p\notp is %p\nstr is %p\n\n", ptr,otp,str);
 		ptr = str;
 		if ((str = ft_get_remainder(ptr)) == NULL)
+		{
+		free(ptr);
+		free(otp);
 				return (0);
+		}
 		return (1);
 }

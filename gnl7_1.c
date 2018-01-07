@@ -19,7 +19,7 @@ int				main(void)
 
 	filename = "gnl7_1.txt";
 	fd = open(filename, O_RDONLY);
-	printf("FD IS %d\n", fd);fflush(stdout);
+//	printf("FD IS %d\n", fd);fflush(stdout);
 	if (fd > 2)
 	{
 		count_lines = 0;
@@ -27,7 +27,7 @@ int				main(void)
 		line = NULL;
 		while ((ret = get_next_line(fd, &line)) > 0)
 		{
-		printf("ret is %d\nline is %s\n", ret, line);fflush(stdout);
+//		printf("ret is %d\nline is %s\n", ret, line);fflush(stdout);
 			if (count_lines == 0 && strcmp(line, "12345678") != 0)
 				errors++;
 			count_lines++;
