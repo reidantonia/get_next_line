@@ -11,7 +11,6 @@
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-#include <stdio.h>
 
 char	*ft_strcomb(char *s1, char *s2)
 {
@@ -27,7 +26,6 @@ char	*ft_strcomb(char *s1, char *s2)
 		while (s1[i])
 				fresh[j++] = s1[i++];
 		i = 0;
-		//	free(s1);
 		while (s2[i])
 				fresh[j++] = s2[i++];
 		return (fresh);
@@ -108,14 +106,10 @@ int					get_next_line(int const fd, char **line)
 		}
 		otp = ft_trim_line(str);
 		*line = otp;
-		//*line = (otp = ft_trim_line(str)); 
-		//free(otp);
-	//	printf("ptr is %p\notp is %p\nstr is %p\n\n", ptr,otp,str);
 		ptr = str;
 		if ((str = ft_get_remainder(ptr)) == NULL)
 		{
-		free(ptr);
-		//free(otp);
+				free(ptr);
 				return (0);
 		}
 		return (1);
