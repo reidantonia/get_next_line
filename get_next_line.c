@@ -31,7 +31,6 @@ char	*ft_strcomb(char *s1, char *s2)
 		return (fresh);
 }
 
-
 static int		ft_check_line(const char *str)
 {
 		int i;
@@ -85,11 +84,8 @@ int					get_next_line(int const fd, char **line)
 		static char	*str;
 		int			ret;
 		char		*ptr;
-		char *otp;
 
-		if (read(fd, buf, 0) < 0)
-				return (-1);
-		if (BUFF_SIZE < 1 || !line || (fd < 0))
+		if ((read(fd, buf, 0) < 0) || BUFF_SIZE < 1 || !line || (fd < 0))
 				return (-1);
 		if (!str)
 		{
@@ -104,8 +100,7 @@ int					get_next_line(int const fd, char **line)
 				str = ft_strcomb(ptr, buf);
 				free(ptr);
 		}
-		otp = ft_trim_line(str);
-		*line = otp;
+		*line = ft_trim_line(str);
 		ptr = str;
 		if ((str = ft_get_remainder(ptr)) == NULL)
 		{
