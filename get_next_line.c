@@ -12,26 +12,7 @@
 
 #include "get_next_line.h"
 
-char	*ft_strcomb(char *s1, char *s2)
-{
-		char	*fresh;
-		size_t	i;
-		size_t	j;
-
-		fresh = ft_strnew(ft_strlen(s1) + ft_strlen(s2));
-		if (fresh == NULL)
-				return (NULL);
-		j = 0;
-		i = 0;
-		while (s1[i])
-				fresh[j++] = s1[i++];
-		i = 0;
-		while (s2[i])
-				fresh[j++] = s2[i++];
-		return (fresh);
-}
-
-static int		ft_check_line(const char *str)
+static int		ft_chkl(const char *str)
 {
 		int i;
 
@@ -78,31 +59,41 @@ static char		*ft_get_remainder(char *str)
 		return (ret);
 }
 
+char *ft_really_get(int const fd, char **line, char **str)
+{
+		char		buf[BUFF_SIZE + 1];
+		int ret;
+		char *ptr;
+		while (!(ft_chkl((const char*)str[fd])) && (ret = read(fd, buf, BUFF_SIZE)) > 0)
+		{
+				buf[ret] = '\0';
+				ptr = str[fd];
+				str[fd] = ft_strjoin(ptr, buf);
+				free(ptr);
+		}
+		*line = ft_trim_line(str[fd]);
+		return (str[fd]);
+}
+
+
 int					get_next_line(int const fd, char **line)
 {
 		char		buf[BUFF_SIZE + 1];
-		static char	*str;
-		int			ret;
+		static char	*str[10];
+		//int			ret;
 		char		*ptr;
 
 		if ((read(fd, buf, 0) < 0) || BUFF_SIZE < 1 || !line || (fd < 0))
 				return (-1);
-		if (!str)
+		if (!str[fd])
 		{
-				str = ft_strnew(0);
-				if (str == NULL)
+				str[fd] = ft_strnew(0);
+				if (str[fd] == NULL)
 						return (-1);
 		}
-		while (!(ft_check_line((const char*)str)) && (ret = read(fd, buf, BUFF_SIZE)) > 0)
-		{
-				buf[ret] = '\0';
-				ptr = str;
-				str = ft_strcomb(ptr, buf);
-				free(ptr);
-		}
-		*line = ft_trim_line(str);
-		ptr = str;
-		if ((str = ft_get_remainder(ptr)) == NULL)
+		str[fd] = ft_really_get(fd, line, str);
+		ptr = str[fd];
+		if ((str[fd] = ft_get_remainder(ptr)) == NULL)
 		{
 				free(ptr);
 				return (0);
