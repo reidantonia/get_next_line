@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcat.c                                        :+:      :+:    :+:   */
+/*   ft_str_is_numeric.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: areid <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/08/08 20:56:51 by areid             #+#    #+#             */
-/*   Updated: 2017/11/19 16:05:37 by areid            ###   ########.fr       */
+/*   Created: 2017/08/08 19:08:33 by areid             #+#    #+#             */
+/*   Updated: 2017/08/09 12:12:10 by areid            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*ft_strcat(char *dest, const char *src)
+int		ft_str_is_numeric(char *str)
 {
-	int	counter;
-	int	i;
+	int counter;
 
 	counter = 0;
-	i = 0;
-	if (src == '\0' && dest == '\0')
-		return (0);
-	while (dest[counter] != '\0')
-		counter++;
-	while (src[i] != '\0')
+	if (str == '\0')
+		return (1);
+	while (str[counter] != '\0')
 	{
-		dest[counter] = src[i];
-		counter++;
-		i++;
+		if ((str[counter] < '0') || (str[counter] > '9'))
+			return (0);
+		else
+			counter++;
 	}
-	dest[counter] = '\0';
-	return (dest);
+	return (1);
 }

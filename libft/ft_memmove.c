@@ -3,41 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjoubert <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: areid <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/14 19:52:11 by mjoubert          #+#    #+#             */
-/*   Updated: 2017/11/17 09:34:18 by mjoubert         ###   ########.fr       */
+/*   Created: 2017/11/07 18:18:10 by areid             #+#    #+#             */
+/*   Updated: 2017/11/07 18:18:13 by areid            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
 #include "libft.h"
 
-void	*ft_memmove(void *dst, const void *src, size_t len)
+void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	size_t	i;
-	char	*src2;
-	char	*dst2;
+	void *tmp;
 
-	src2 = (char *)src;
-	dst2 = (char *)dst;
-	i = 0;
-	if (src > dst)
+	tmp = ft_memalloc(n);
+	if (tmp != NULL)
 	{
-		while (i < len)
-		{
-			dst2[i] = src2[i];
-			i++;
-		}
+		tmp = ft_memcpy(tmp, src, n);
+		dest = ft_memcpy(dest, tmp, n);
+		free(tmp);
 	}
-	else if (src < dst)
-	{
-		i = len - 1;
-		while (len--)
-		{
-			dst2[i] = src2[i];
-			i--;
-		}
-	}
-	return ((void *)dst2);
+	return (dest);
 }

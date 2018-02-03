@@ -3,33 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   ft_memccpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjoubert <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: areid <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/14 18:16:14 by mjoubert          #+#    #+#             */
-/*   Updated: 2017/11/21 16:50:24 by mjoubert         ###   ########.fr       */
+/*   Created: 2017/11/07 18:05:37 by areid             #+#    #+#             */
+/*   Updated: 2017/11/18 18:41:47 by areid            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
 #include "libft.h"
 
-void	*ft_memccpy(void *dst, const void *src, int c, size_t n)
+void	*ft_memccpy(void *str1, const void *str2, int c, size_t n)
 {
-	size_t		i;
-	char		*dst2;
-	const char	*str2;
+	char			*dst;
+	const char		*src;
+	unsigned int	x;
 
-	dst2 = (char *)dst;
-	str2 = (const char *)src;
-	i = 0;
-	while (i < n)
+	dst = (char*)str1;
+	src = (const char*)str2;
+	x = 0;
+	while (x < n)
 	{
-		dst2[i] = str2[i];
-		if (str2[i] == (const char)c)
-		{
-			return ((void *)&dst2[i + 1]);
-		}
-		i++;
+		dst[x] = src[x];
+		if (src[x] == (const char)c)
+			return (dst + x + 1);
+		x++;
 	}
 	return (NULL);
 }

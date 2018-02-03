@@ -1,32 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcat.c                                        :+:      :+:    :+:   */
+/*   ft_strlowcase.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: areid <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/08/08 20:56:51 by areid             #+#    #+#             */
-/*   Updated: 2017/11/19 16:05:37 by areid            ###   ########.fr       */
+/*   Created: 2017/08/08 15:32:39 by areid             #+#    #+#             */
+/*   Updated: 2017/08/09 18:21:49 by areid            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-char	*ft_strcat(char *dest, const char *src)
+char	*ft_strlowcase(char *str)
 {
-	int	counter;
-	int	i;
+	int counter;
 
 	counter = 0;
-	i = 0;
-	if (src == '\0' && dest == '\0')
+	if (str == '\0')
 		return (0);
-	while (dest[counter] != '\0')
-		counter++;
-	while (src[i] != '\0')
+	while (str[counter] != '\0')
 	{
-		dest[counter] = src[i];
+		if (str[counter] >= 'A' && str[counter] <= 'Z')
+		{
+			str[counter] = str[counter] + 32;
+		}
 		counter++;
-		i++;
 	}
-	dest[counter] = '\0';
-	return (dest);
+	return (str);
 }

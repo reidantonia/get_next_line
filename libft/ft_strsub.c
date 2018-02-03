@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsub.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjoubert <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: areid <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/16 14:29:37 by mjoubert          #+#    #+#             */
-/*   Updated: 2017/11/21 16:09:51 by mjoubert         ###   ########.fr       */
+/*   Created: 2018/02/03 10:36:10 by areid             #+#    #+#             */
+/*   Updated: 2018/02/03 10:36:13 by areid            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,5 @@ char	*ft_strsub(char const *s, unsigned int start, size_t len)
 		str[i] = s[start + i];
 		i++;
 	}
-	//free((char*)s);
 	return (str);
 }

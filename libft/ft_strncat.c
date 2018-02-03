@@ -1,30 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcat.c                                        :+:      :+:    :+:   */
+/*   ft_strncat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjoubert <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: areid <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/13 15:42:28 by mjoubert          #+#    #+#             */
-/*   Updated: 2017/11/17 16:00:25 by mjoubert         ###   ########.fr       */
+/*   Created: 2017/08/08 21:56:50 by areid             #+#    #+#             */
+/*   Updated: 2017/11/19 16:00:07 by areid            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <string.h>
 #include "libft.h"
 
-char	*ft_strncat(char *dest, const char *src, size_t n)
+char	*ft_strncat(char *dest, const char *src, size_t nb)
 {
-	size_t i;
-	size_t b;
+	int		counter;
+	size_t	i;
 
-	b = 0;
-	i = ft_strlen(dest);
-	while (src[b] != '\0' && b < n)
+	counter = 0;
+	if (src == '\0' && dest == '\0')
+		return (0);
+	while (dest[counter] != '\0')
+		counter++;
+	i = 0;
+	while (i < nb && src[i] != '\0')
 	{
-		dest[i + b] = src[b];
-		b++;
+		dest[counter] = src[i];
+		counter++;
+		i++;
 	}
-	dest[i + b] = '\0';
+	dest[counter] = '\0';
 	return (dest);
 }

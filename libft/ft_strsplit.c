@@ -3,81 +3,75 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strsplit.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mjoubert <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: areid <marvin@42.fr>                       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/17 16:58:52 by mjoubert          #+#    #+#             */
-/*   Updated: 2017/11/21 16:34:48 by mjoubert         ###   ########.fr       */
+/*   Created: 2017/11/18 11:52:22 by areid             #+#    #+#             */
+/*   Updated: 2017/11/19 11:56:41 by areid            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
 
-static int	ft_countword(char const *s, char c)
+static int		ft_countwords(char const *str, char c)
 {
-	int		i;
-	int		m;
+	int		wc;
+	char	*p1;
+	char	*p2;
 
-	i = 0;
-	m = 0;
-	while (s[i] != '\0')
+	p1 = (char*)str;
+	wc = 0;
+	while (*p1 != '\0')
 	{
-		while (s[i] == c && s[i] != '\0')
-			i++;
-		while (s[i] != c && s[i] != '\0')
-			i++;
-		m++;
-	}
-	return (m);
-}
-
-static int	ft_countletter(char const *s, int i, char c)
-{
-	int		b;
-
-	b = 0;
-	while (s[i] != c && s[i] != '\0')
-	{
-		b++;
-		i++;
-	}
-	return (b);
-}
-
-static char	*ft_place(char const *s, char **str, int m, char c)
-{
-	int l;
-	int b;
-	int i;
-
-	i = 0;
-	b = 0;
-	l = 0;
-	while (s[i] != '\0' && b < m)
-	{
-		while (s[i] == c && s[i] != '\0')
-			i++;
-		if (s[i] != c && s[i] != '\0')
+		if (*p1 != c)
 		{
-			l = ft_countletter(s, i, c);
-			str[b++] = ft_strsub(s, i, l);
-			i = i + l;
+			p2 = p1;
+			while (*p2 != '\0' && *p2 != c)
+				p2++;
+			wc++;
+			p1 = p2;
+		}
+		else
+		{
+			p1++;
 		}
 	}
-	str[b] = 0;
-	return (*str);
+	return (wc);
 }
 
-char		**ft_strsplit(char const *s, char c)
+static int		ft_wl(char const *str, char c)
 {
-	int		m;
-	char	**str;
+	int		length;
 
-	if (!s)
-		return (0);
-	m = ft_countword(s, c);
-	if (!(str = (char**)malloc(sizeof(char *) * (m + 1))))
-		return (0);
-	*str = ft_place(s, str, m, c);
-	return (str);
+	length = 0;
+	while (*str != '\0' && *str != c)
+	{
+		length++;
+		str++;
+	}
+	return (length);
+}
+
+char			**ft_strsplit(char const *str, char c)
+{
+	char	**array;
+	int		wc;
+	int		i;
+
+	if (!str)
+		return (NULL);
+	wc = ft_countwords(str, c);
+	i = 0;
+	array = (char**)malloc(sizeof(char*) * (wc + 1));
+	if (!array)
+		return (NULL);
+	while (i < wc)
+	{
+		while (*str == c && *str != '\0')
+			str++;
+		array[i] = ft_strsub((const char *)str, 0, (unsigned int)ft_wl(str, c));
+		str = str + ft_wl(str, c);
+		i++;
+	}
+	array[i] = NULL;
+	return (array);
 }
